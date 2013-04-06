@@ -1,0 +1,25 @@
+<project name="Encoding Guard" default="compile" basedir=".">
+
+    <property name="srcFile" value="${basedir}/src/EncodingGuard.java"/>
+
+    <target name="compile" description="Compile the source code.">
+        <javac srcdir="src" encoding="UTF-8" destdir="bin" includeantruntime="false" />
+    </target>
+
+    <target name="switch-encoding" description="Switch the encoding of the Java source code.">
+        <fail unless="fromEncoding" message="Missing property fromEncoding. Invoke Ant with -DfromEncoding="/>
+        <fail unless="toEncoding" message="Missing property toEncoding. Invoke Ant with -DtoEncoding="/>
+        <tempfile property="srcFileBackup" prefix="EncodingGuard" suffix=".java_${fromEncoding}"/>
+        <copy file="${srcFile}" tofile="${srcFileBackup}"/>
+        <exec executable="iconv">
+            <arg value="--from-code"/>
+            <arg value="${fromEncoding}"/>
+            <arg value="--to-code"/>
+            <arg value="${toEncoding}"/>
+            <arg value="-o"/>
+            <arg value="${srcFile}"/>
+            <arg value="${srcFile}"/>
+        </exec>
+        <echo message="Switched source code encoding of ${srcFile} from ${fromEncoding} to ${toEncoding}. A backup of the file before conversion is in ${srcFileBackup}."/>
+    </target>
+</project>
