@@ -24,13 +24,8 @@ Yields `BUILD FAILED`.
 
 ## How it works
 
-The compilation failure for the wrong encoding is provided by utilizing Java's
-requirement that all case statements within a switch statement must be unique:
+The compilation failure for the wrong encoding is provided by either:
 
-    // The Euro sign has different byte representation in UTF-8, ISO-8859-15
-    // and CP-1252. The encoding of this file should be UTF-8.
-    switch (0x20AC) { // Euro, UTF-8
-        case '€': break; // Euro in the encoding of this file
-        case 0xA4: break; // Euro, ISO-8859-15
-        case 0x80: break; // Euro, CP-1252
-    }
+* Making the character literal for € unrepresentable in the wrong encodings.
+* Utilizing Java's requirement that all case statements within a switch
+  statement must be unique.
