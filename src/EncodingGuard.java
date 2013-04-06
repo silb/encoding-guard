@@ -11,7 +11,7 @@ public class EncodingGuard {
         case '€': break; // Euro in the encoding of this file
         case 0xA4: break; // Euro, ISO-8859-15
         case 0x80: break; // Euro, CP-1252
-        //case 0x20AC: break; // Euro, UTF-8.
+        //case 0x20AC: break; // Euro, UTF-8. Comment in this line and this file can't be compiled in UTF-8.
         }
     }
 }
